@@ -7,6 +7,16 @@ const loadFeatures = async () => {
 const displayFeatures = (features) => {
     console.log(features)
     const featuresContainer = document.getElementById('features-container')
+    // Show All
+    const showAll = document.getElementById('show-all')
+    if (features.length > 6) {
+        features = features.slice(0, 6)
+        showAll.classList.remove('d-none')
+    }
+    else {
+        showAll.classList.add('d-none')
+    }
+
     features.forEach(feature => {
         const featureDiv = document.createElement('div')
         featureDiv.classList.add('col')
@@ -29,7 +39,7 @@ const displayFeatures = (features) => {
                         <p class="text-secondary"><i class="fa-regular fa-calendar-days"></i> ${feature.published_in}</p>
                     </div>
                     <div class="d-flex align-items-center">
-                        <button onclick="loadFeatureDetails('')" class="btn btn-light rounded-3" data-bs-toggle="modal" data-bs-target="#phoneDetailsModal"><i class="fa-solid fa-arrow-right text-danger"></i></button>
+                        <button onclick="loadFeatureDetails('')" class="btn btn-light rounded-3" data-bs-toggle="modal" data-bs-target="#featureDetailsModal"><i class="fa-solid fa-arrow-right text-danger"></i></button>
                     </div>
                 </div>
                     </div>
@@ -40,4 +50,8 @@ const displayFeatures = (features) => {
 
 
 }
+document.getElementById('show-all-btn').addEventListener('click', function () {
+    loadFeatures()
+})
+
 loadFeatures()
