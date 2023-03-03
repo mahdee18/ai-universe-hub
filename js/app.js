@@ -6,15 +6,6 @@ const loadFeatures = async (dataLimit) => {
 }
 const displayFeatures = (features,dataLimit) => {
     const featuresContainer = document.getElementById('features-container')
-    // Show All
-    // const showAll = document.getElementById('show-all')
-    // if (features.length > 6) {
-    //     features = features.slice(0, 6)
-    //     showAll.classList.remove('d-none')
-    // }
-    // else {
-    //     showAll.classList.add('d-none')
-    // }
     const showAll = document.getElementById('show-all');
         if (features.length > dataLimit) {
             features = features.slice(0, dataLimit);
@@ -90,54 +81,60 @@ const displayModal = (items) => {
     const modalContainer = document.getElementById('featureDetails')
     modalContainer.textContent = '';
     modalContainer.innerHTML = `
-                        <div class="col">
-                                <div class="card p-3">
-                                    <h5>${items.description}</h5>
-                                    <div class="d-flex justify-content-between rounded ">
-                                        <div class="text-success p-2 bg-light">
-                                        <p>${items.pricing[0].price !=0 ? items.pricing[0].price : "Free of Cost"}</p>
-                                        <p>${items.pricing[0].plan? items.pricing[0].plan : "No Data Found"}</p>
-                                        </div>
-                                        <div class="text-warning p-2">
-                                        <p>${items.pricing[1].price !=1 ? items.pricing[1].price : "Free of Cost / Enterprise"}</p>
-                                        <p>${items.pricing[1].plan? items.pricing[1].plan : "No Data Found"}</p>
-                                        </div>
-                                        <div class="text-danger p-2">
-                                        <p>${items.pricing[2].price !=2 ? items.pricing[2].price : "Free of Cost"}</p>
-                                        <p>${items.pricing[2].plan? items.pricing[2].plan : "No Data Found"}</p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <h4>Features</h4>
-                                            <ul>
-                                                <li>${items.features[1].feature_name}</li>
-                                                <li>${items.features[2].feature_name}</li>
-                                                <li>${items.features[3].feature_name}</li>
-                                            </ul>
-                                        </div>
-                                        <div>
-                                            <h4>Integrations</h4>
-                                            <ul>
-                                                    <li>${items.integrations[0]? items.integrations[0] : "No Data Found"}</li>
-                                                    <li>${items.integrations[1]? items.integrations[1] : "No Data Found"}</li>
-                                                    <li>${items.integrations[2]?items.integrations[2] : "No Data Found"}</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            
-                            </div>
-                            <div class="col">
-                            <div class="card h-100">
-                            <img src="${items.image_link[0]}" class="card-img-top" alt="">
-                            <div class="card-body">
-                              <h5 class="card-title p-3">${items.input_output_examples[0].input}</h5>
-                              <p class="card-text">${items.input_output_examples[0].output ? items.input_output_examples[0].output : 'No! Not Yet! Take a break!!!'}</p>
-                            </div>
-                        </div>
-                            </div> 
+    <div class="col">
+    <div class="card p-3">
+        <h5>${items.description}</h5>
+        <div class="d-flex justify-content-between rounded center">
+            <div class="text-success p-2 bg-light rounded-3">
+            <h6>${items.pricing[0].price !=0 ? items.pricing[0].price : "Free of Cost"}</h6>
+            <h6>${items.pricing[0].plan? items.pricing[0].plan : "No Data Found"}</h6>
+            </div>
+            <div class="text-warning p-2 bg-light rounded-3 m-2">
+            <h6>${items.pricing[1].price !=1 ? items.pricing[1].price : "Free of Cost"}</h6>
+            <h6>${items.pricing[1].plan? items.pricing[1].plan : "No Data Found"}</h6>
+            </div>
+            <div class="text-danger p-2 bg-light rounded-3">
+            <h6>${items.pricing[2].price !=2 ? items.pricing[2].price : "Free of Cost"}</h6>
+            <h6>${items.pricing[2].plan? items.pricing[2].plan : "No Data Found"}</h6>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div>
+                <h4>Features</h4>
+                <ul>
+                    <li>${items.features[1].feature_name}</li>
+                    <li>${items.features[2].feature_name}</li>
+                    <li>${items.features[3].feature_name}</li>
+                </ul>
+            </div>
+            <div>
+                <h4>Integrations</h4>
+                <ul>
+                        <li>${items.integrations[0]? items.integrations[0] : "No Data Found"}</li>
+                        <li>${items.integrations[1]? items.integrations[1] : "No Data Found"}</li>
+                        <li>${items.integrations[2]?items.integrations[2] : "No Data Found"}</li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+
+</div>
+<div class="col">
+<div class="card h-100">
+<div>
+
+    <img src="${items.image_link[0]}" class="card-img-top img-fluid" alt="">
+    <span class="accuracy"><button class="btn btn-danger"><span>${items.accuracy.score}%</span> accuracy</button></span>
+</div>
+<div class="card-body">
+  <h5 class="card-title p-3">${items.input_output_examples[0].input}</h5>
+  <p class="card-text">${items.input_output_examples[0].output ? items.input_output_examples[0].output : 'No! Not Yet! Take a break!!!'}</p>
+</div>
+</div>
+</div>
     `
     modalContainer.appendChild(modalSmallDiv)
 }
+
+
