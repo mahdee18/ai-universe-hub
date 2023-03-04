@@ -1,13 +1,16 @@
+// Load Data
 const loadFeatures = async (dataLimit) => {
     const url = ('https://openapi.programming-hero.com/api/ai/tools')
     const res = await fetch(url);
     const data = await res.json()
-    displayFeatures(data.data.tools,dataLimit)
+    displayFeatures(data.data.tools, dataLimit)
 }
-
+// Display Data
 const displayFeatures = (features, dataLimit) => {
-            // Loader Start
-            toggleSpinner(true);
+
+// Loader Start
+    toggleSpinner(true);
+
     const featuresContainer = document.getElementById('features-container')
     const showAll = document.getElementById('show-all');
 
@@ -54,7 +57,7 @@ const displayFeatures = (features, dataLimit) => {
     // Loader Stop
     toggleSpinner(false);
 }
-
+// Spinner Toggler
 const toggleSpinner = (isLoading) => {
     const loader = document.getElementById('spinner')
     if (isLoading) {
@@ -65,12 +68,14 @@ const toggleSpinner = (isLoading) => {
     }
 }
 
+// Call See more btn
 document.getElementById('show-all-btn').addEventListener('click', function (dataLimit) {
     const featuresContainer = document.getElementById('features-container')
 
     loadFeatures(featuresContainer);
 })
 
+// Sorting By Date(Ascending order)
 const sortByDate = () => {
     const featuresContainer = document.getElementById('features-container');
     const features = Array.from(featuresContainer.children);
@@ -82,14 +87,14 @@ const sortByDate = () => {
     features.forEach(feature => {
         featuresContainer.appendChild(feature);
     });
-    
-}
 
+}
+// Call Sort By Date Button
 document.getElementById('sort-by-date-btn').addEventListener('click', sortByDate);
 
 loadFeatures(6);
 
-
+// Modal Section
 const loadModal = async (id) => {
     const url = (`https://openapi.programming-hero.com/api/ai/tool/${id}`)
     const res = await fetch(url)
@@ -106,16 +111,16 @@ const displayModal = (items) => {
         <h5>${items.description}</h5>
         <div class="d-flex justify-content-between rounded center">
             <div class="text-success p-2 bg-light rounded-3">
-            <h6>${items.pricing[0].price !=0 ? items.pricing[0].price : "Free of Cost"}</h6>
-            <h6>${items.pricing[0].plan? items.pricing[0].plan : "No Data Found"}</h6>
+            <h6>${items.pricing[0].price != 0 ? items.pricing[0].price : "Free of Cost"}</h6>
+            <h6>${items.pricing[0].plan ? items.pricing[0].plan : "No Data Found"}</h6>
             </div>
             <div class="text-warning p-2 bg-light rounded-3 m-2">
-            <h6>${items.pricing[1].price !=1 ? items.pricing[1].price : "Free of Cost"}</h6>
-            <h6>${items.pricing[1].plan? items.pricing[1].plan : "No Data Found"}</h6>
+            <h6>${items.pricing[1].price != 1 ? items.pricing[1].price : "Free of Cost"}</h6>
+            <h6>${items.pricing[1].plan ? items.pricing[1].plan : "No Data Found"}</h6>
             </div>
             <div class="text-danger p-2 bg-light rounded-3">
-            <h6>${items.pricing[2].price !=2 ? items.pricing[2].price : "Free of Cost"}</h6>
-            <h6>${items.pricing[2].plan? items.pricing[2].plan : "No Data Found"}</h6>
+            <h6>${items.pricing[2].price != 2 ? items.pricing[2].price : "Free of Cost"}</h6>
+            <h6>${items.pricing[2].plan ? items.pricing[2].plan : "No Data Found"}</h6>
             </div>
         </div>
         <div class="d-flex justify-content-between">
@@ -130,9 +135,9 @@ const displayModal = (items) => {
             <div>
                 <h4>Integrations</h4>
                 <ul>
-                        <li>${items.integrations[0]? items.integrations[0] : "No Data Found"}</li>
-                        <li>${items.integrations[1]? items.integrations[1] : "No Data Found"}</li>
-                        <li>${items.integrations[2]?items.integrations[2] : "No Data Found"}</li>
+                        <li>${items.integrations[0] ? items.integrations[0] : "No Data Found"}</li>
+                        <li>${items.integrations[1] ? items.integrations[1] : "No Data Found"}</li>
+                        <li>${items.integrations[2] ? items.integrations[2] : "No Data Found"}</li>
                 </ul>
             </div>
         </div>
@@ -145,7 +150,7 @@ const displayModal = (items) => {
 <div>
 
     <img src="${items.image_link[0]}" class="card-img-top img-fluid" alt="">
-    <span class="accuracy"><button class="btn btn-danger"><span>${items.accuracy.score*100 ? items.accuracy.score*100 :'No'}</span>% accuracy</button></span>
+    <span class="accuracy"><button class="btn btn-danger"><span>${items.accuracy.score * 100 ? items.accuracy.score * 100 : 'No'}</span>% accuracy</button></span>
 </div>
 <div class="card-body">
   <h5 class="card-title p-3">${items.input_output_examples[0].input}</h5>
