@@ -8,7 +8,7 @@ const loadFeatures = async (dataLimit) => {
 // Display Data
 const displayFeatures = (features, dataLimit) => {
 
-// Loader Start
+    // Loader Start
     toggleSpinner(true);
 
     const featuresContainer = document.getElementById('features-container')
@@ -148,10 +148,10 @@ const displayModal = (items) => {
 <div class="col">
 <div class="card h-100">
 <div>
-
     <img src="${items.image_link[0]}" class="card-img-top img-fluid" alt="">
     <span class="accuracy"><button class="btn btn-danger"><span>${items.accuracy.score * 100 ? items.accuracy.score * 100 : 'No'}</span>% accuracy</button></span>
 </div>
+
 <div class="card-body">
   <h5 class="card-title p-3">${items.input_output_examples[0].input}</h5>
   <p class="card-text">${items.input_output_examples[0].output ? items.input_output_examples[0].output : 'No! Not Yet! Take a break!!!'}</p>
