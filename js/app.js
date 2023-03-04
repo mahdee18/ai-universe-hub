@@ -4,35 +4,39 @@ const loadFeatures = async (dataLimit) => {
     const data = await res.json()
     displayFeatures(data.data.tools,dataLimit)
 }
-const displayFeatures = (features,dataLimit) => {
+
+const displayFeatures = (features, dataLimit) => {
+            // Loader Start
+            toggleSpinner(true);
     const featuresContainer = document.getElementById('features-container')
     const showAll = document.getElementById('show-all');
-        if (features.length > dataLimit) {
-            features = features.slice(0, dataLimit);
-            showAll.classList.remove("d-none");
-        } else {
-            showAll.classList.add("d-none");
-        }
 
-    featuresContainer.innerHTML=''
-    
+    if (features.length > dataLimit) {
+        features = features.slice(0, dataLimit);
+        showAll.classList.remove("d-none");
+    } else {
+        showAll.classList.add("d-none");
+    }
+
+    featuresContainer.innerHTML = ''
+
     features.forEach(feature => {
         const featureDiv = document.createElement('div')
         featureDiv.classList.add('col')
         featureDiv.innerHTML = `
         <div class="card h-100">
-                    <img src="${feature.image}" class="card-img-top p-4" alt="...">
-                    <div class="card-body">
-                      <h3 class="card-title">Features</h3>
-                    <p> 
-                        <ol class="text-secondary">
-                            <li>${feature.features[0] ? feature.features[0] : 'Data not found!!'}</li>
-                            <li>${feature.features[1] ? feature.features[1] : 'Data not found!!'}</li>
-                            <li>${feature.features[2] ? feature.features[2] : 'Data not found!!'}</li>
-                        </ol>
-                    </p> 
-                    <hr>        
-                    <div class="d-flex justify-content-between">
+            <img src="${feature.image}" class="card-img-top p-4" alt="...">
+            <div class="card-body">
+                <h3 class="card-title">Features</h3>
+                <p> 
+                    <ol class="text-secondary">
+                        <li>${feature.features[0] ? feature.features[0] : 'Data not found!!'}</li>
+                        <li>${feature.features[1] ? feature.features[1] : 'Data not found!!'}</li>
+                        <li>${feature.features[2] ? feature.features[2] : 'Data not found!!'}</li>
+                    </ol>
+                </p> 
+                <hr>        
+                <div class="d-flex justify-content-between">
                     <div>
                         <h3>${feature.name}</h3>
                         <p class="text-secondary"><i class="fa-regular fa-calendar-days"></i> ${feature.published_in}</p>
@@ -41,15 +45,16 @@ const displayFeatures = (features,dataLimit) => {
                         <button onclick="loadModal('${feature.id}')" class="btn btn-outline-danger rounded-circle" data-bs-toggle="modal" data-bs-target="#featureDetailsModal"><i class="fa-solid fa-arrow-right"></i></button>
                     </div>
                 </div>
-                    </div>
-                  </div>
+            </div>
+        </div>
         `
         featuresContainer.appendChild(featureDiv)
     });
-    // Loader Stop
-    toggleSpinner(false)
 
+    // Loader Stop
+    toggleSpinner(false);
 }
+
 const toggleSpinner = (isLoading) => {
     const loader = document.getElementById('spinner')
     if (isLoading) {
@@ -59,16 +64,31 @@ const toggleSpinner = (isLoading) => {
         loader.classList.add('d-none')
     }
 }
+
 document.getElementById('show-all-btn').addEventListener('click', function (dataLimit) {
     const featuresContainer = document.getElementById('features-container')
-    // Loader Start
-    toggleSpinner(true)
-    
 
-    loadFeatures(featuresContainer)
+    loadFeatures(featuresContainer);
 })
 
-loadFeatures(6)
+const sortByDate = () => {
+    const featuresContainer = document.getElementById('features-container');
+    const features = Array.from(featuresContainer.children);
+    features.sort((a, b) => {
+        const dateA = new Date(a.querySelector('.fa-regular.fa-calendar-days').nextSibling.textContent.trim());
+        const dateB = new Date(b.querySelector('.fa-regular.fa-calendar-days').nextSibling.textContent.trim());
+        return dateA - dateB;
+    });
+    features.forEach(feature => {
+        featuresContainer.appendChild(feature);
+    });
+    
+}
+
+document.getElementById('sort-by-date-btn').addEventListener('click', sortByDate);
+
+loadFeatures(6);
+
 
 const loadModal = async (id) => {
     const url = (`https://openapi.programming-hero.com/api/ai/tool/${id}`)
@@ -125,7 +145,7 @@ const displayModal = (items) => {
 <div>
 
     <img src="${items.image_link[0]}" class="card-img-top img-fluid" alt="">
-    <span class="accuracy"><button class="btn btn-danger"><span>${items.accuracy.score}%</span> accuracy</button></span>
+    <span class="accuracy"><button class="btn btn-danger"><span>${items.accuracy.score*100 ? items.accuracy.score*100 :'No'}</span>% accuracy</button></span>
 </div>
 <div class="card-body">
   <h5 class="card-title p-3">${items.input_output_examples[0].input}</h5>
@@ -135,6 +155,7 @@ const displayModal = (items) => {
 </div>
     `
     modalContainer.appendChild(modalSmallDiv)
+
 }
 
 
